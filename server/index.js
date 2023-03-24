@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 //configuration
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config();
+dotenv.config({ path: '.env' });
 const app = express();
 app.use(express.json());
 app.use(helmet());
@@ -34,3 +34,16 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage});
+
+//mongoose setup
+const MONGO_URI = 'mongodb+srv://Balaguru:Bala%402002@nodeapi.l7sfb.mongodb.net/?retryWrites=true&w=majority'
+const port =3001
+
+const PORT = port || 6001;
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser : true,
+    useUnifiedTopology : true
+}).then(()=>{
+    app.listen(PORT ,()=>{console.log(`server ${PORT}`)});
+})
+.catch((error)=>console.log(`${error} did not connect`));
