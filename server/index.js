@@ -44,6 +44,6 @@ mongoose.connect(MONGO_URI, {
     useNewUrlParser : true,
     useUnifiedTopology : true
 }).then(()=>{
-    app.listen(PORT ,()=>{console.log(`server ${PORT}`)});
+    app.listen(PORT ,()=>{console.log(`server port ${PORT}`)});
 })
 .catch((error)=>console.log(`${error} did not connect`));
