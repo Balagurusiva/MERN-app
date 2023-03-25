@@ -1,6 +1,9 @@
-import bcrypt from "bcrpt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 import User from "../models/User.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 //register user 
 export const register = async (req,res) =>{
@@ -36,5 +39,30 @@ export const register = async (req,res) =>{
 
     }catch (err){
        res.status(500).json({error: err(message)});
+    }
+};
+
+//login function
+
+export const login = async (req,res) =>{
+    try{
+        //get the email from the req and seacrh it in the database 
+        const {email, password} = req.body;
+        const user = await User.findOne({ email:email  });
+        if(!user){
+             return res.status(400). json({msg:"User does not exist."});
+        }
+        
+       //compare the password from the req with the hash code pasword in the database
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch) return res.status(400).json({msg:"invalid password"});
+        
+        
+        const token = jwt.sign({id:user._id},process.env.jwt_seceret );
+        delete user.password;
+
+        res.status(200).json({token, user});
+    }catch(err){
+        res.status(500).json({error:err.message});
     }
 }
