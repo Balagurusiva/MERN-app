@@ -9,6 +9,7 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
 import {register} from './controllers/auth.js'
 
 //configuration
@@ -42,6 +43,7 @@ app.post("/auth/register", upload.single('picture'), register)
 
 //routes
 app.use("/auth", authRoutes)
+app.use("/users", userRoutes)
 
 //mongoose setup
 const MONGO_URI = 'mongodb+srv://Balaguru:Bala%402002@nodeapi.l7sfb.mongodb.net/?retryWrites=true&w=majority'
