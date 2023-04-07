@@ -1,9 +1,10 @@
 import React from 'react'
+ import Navbar from '../navbar'
 
 function LoginPage() {
   return (
     <div>
-     login page
+     <Navbar />
     </div>
   )
 }
